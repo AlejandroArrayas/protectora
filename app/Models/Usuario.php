@@ -23,6 +23,7 @@ class Usuario extends DBAbstractModel {
     public $created_at;
     public $updated_at;
     public $mensaje = '';
+    public $administrador = false;
 
     public function setUser($user) {
         $this->user = $user;

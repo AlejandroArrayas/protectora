@@ -64,5 +64,13 @@ class Propietario extends DBAbstractModel {
             $this->mensaje = 'ID no proporcionado para eliminar propietario';
         }
     }
+
+    public function getNombre() {
+        return $this->nombre;
+    }
+
+    public function getNombreById($id_propietario){
+        
+    }
 }
 ?>

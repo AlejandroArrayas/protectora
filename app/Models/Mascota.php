@@ -89,5 +89,11 @@ class Mascota extends DBAbstractModel {
         $this->get_results_from_query();
         return $this->rows;
     }
+
+    public function getMascotasWithoutPropietario() {
+        $this->query = "SELECT * FROM mascotas WHERE propietario_id IS NOT NULL";
+        $this->get_results_from_query();
+        return $this->rows;
+    }
 }
 ?>

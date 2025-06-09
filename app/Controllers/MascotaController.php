@@ -74,9 +74,10 @@ class MascotaController extends BaseController {
         $oMascota = new Mascota();
         
         // Obtenemos todas las mascotas
-        // $data['mascotas'] = $oMascota->get();
+        $data['mascotas'] = $oMascota->get();
 
         // Obtenemos las mascotas sin propietario
+        $data['mascotasSinPropietario'] = $oMascota->getMascotasWithoutPropietario();
 
         //Obtenemos las mascotas con propietario
         $data['mascotasConPropietario'] = $oMascota->getMascotasWithPropietario();

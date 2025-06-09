@@ -12,6 +12,7 @@ require_once "../app/conf/conf.php";
 use App\Core\Router;
 use App\Controllers\BasicController;
 use App\Controllers\MascotaController;
+use App\Controllers\PropietarioController;
 
 $router = new Router();
 // $router->add([
@@ -68,6 +69,13 @@ $router->add([
     'name'=>'mascotas',
     'path'=>'/^\/mascotas$/',
     'action'=>[MascotaController::class, 'indexAction'],
+    'perfil'=> ['user', 'admin', 'invitado']
+]);
+
+$router->add([
+    'name'=>'propietarios',
+    'path'=>'/^\/propietarios$/',
+    'action'=>[PropietarioController::class, 'indexAction'],
     'perfil'=> ['user', 'admin', 'invitado']
 ]);
 
