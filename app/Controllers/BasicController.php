@@ -1,5 +1,7 @@
 <?php
 namespace App\Controllers;
+
+use App\Models\Propietario;
 use App\Models\Usuario;
 
 class BasicController extends BaseController {
@@ -110,6 +112,7 @@ class BasicController extends BaseController {
             $data['password'] = $_POST['password'];
 
             $oUsuario = Usuario::getInstancia();
+            $oPropietario = Propietario::getInstancia();
 
             // Validar que el campo email no esté vacío
             if (empty($data['email'])) {
@@ -129,6 +132,8 @@ class BasicController extends BaseController {
                 if ($oUsuario->login($data['email'], $data['password'])) {
                     $_SESSION['usuario'] = $oUsuario->getUser();
                     $_SESSION['perfil_usuario'] = $oUsuario->perfilUsuario();
+                    $_SESSION['id_usuario'] = $oUsuario->getId();
+                    $_SESSION['boolean_propietario'] = $oPropietario->isPropietario($oUsuario->getId());
                     header('Location: /');
                     exit();
                 } else {

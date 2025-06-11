@@ -11,7 +11,8 @@ header {
     border-bottom-left-radius: 12px;
     border-bottom-right-radius: 12px;
     box-shadow: 0 2px 8px rgba(76, 163, 175, 0);
-    padding: 4rem;
+    padding: 3rem;
+    margin-bottom: 0.5rem;
 }
 
 .presentacion {
@@ -19,12 +20,11 @@ header {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 1.5rem;
 }
 
 header h1 {
     font-size: 3rem;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
 }
 
 nav {
@@ -180,4 +180,86 @@ a{
     flex-wrap: wrap;
     gap: 20px;
     justify-content: center;
+}
+
+.mascotaView {
+    background-color: #defffb;
+    border: 4px solid #4ca3af;
+    border-radius: 16px;
+    padding: 2.5rem 2rem;
+    margin: 2rem auto;
+    max-width: 500px;
+    box-shadow: 0 4px 16px rgba(76,163,175,0.13);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.2rem;
+}
+.mascotaView h2 {
+    color: #3a8f9b;
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+}
+
+.mascotaCard h2{
+    color: #3a8f9b;
+}
+
+.mascotaView p {
+    font-size: 1.15rem;
+    color: #222;
+    margin-bottom: 0.5rem;
+    padding-left: 0.5rem;
+}
+
+.centrar {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+}
+.boton-volver {
+    background-color: #4ca3af;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 0.9rem 2.2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(76,163,175,0.13);
+    transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+.boton-volver:hover, .boton-volver:focus {
+    background-color: #3a8f9b;
+    color: #fff;
+    box-shadow: 0 4px 16px rgba(76,163,175,0.18);
+    transform: scale(1.04);
+}
+
+.title {
+    text-align: center;
+    margin-top: 2.5rem;
+    margin-bottom: 1.5rem;
+}
+.title h1 {
+    font-size: 2.5rem;
+    color: #3a8f9b;
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+}
+.advise {
+    background-color: #defffb;
+    border-left: 6px solid #4ca3af;
+    border-radius: 8px;
+    padding: 1.2rem 2rem;
+    margin: 0 auto 2rem auto;
+    max-width: 700px;
+    font-size: 1.15rem;
+    color: #222;
+    box-shadow: 0 2px 8px rgba(76,163,175,0.10);
+}
+.advise p {
+    margin: 0;
+    line-height: 1.6;
 }

@@ -12,6 +12,19 @@ class Mascota extends DBAbstractModel {
     public $propietario_id = null;
     public $mensaje = '';
 
+    //Modelo Singleton
+    private static $instancia;
+    public static function getInstancia(){
+        if (!isset(self::$instancia)) {
+            $miclase = __CLASS__;
+            self::$instancia = new $miclase;
+        }
+        return self::$instancia;
+    }
+    public function __clone(){
+        trigger_error('La clonación no es permitida!.', E_USER_ERROR);
+    }
+
     public function setNombre($nombre) {
         $this->nombre = $nombre;
     }
@@ -81,19 +94,47 @@ class Mascota extends DBAbstractModel {
         $this->mensaje = 'Mascota creada correctamente';
         return true;
     }
-    public function edit(){}
-    public function delete(){}
+    public function edit(){
+        $this->query = "UPDATE mascotas SET nombre = :nombre, color = :color, habilidad = :habilidad, sociabilidad = :sociabilidad, propietario_id = :propietario_id WHERE id = :id";
+        $this->parametros['id'] = $this->id;
+        $this->parametros['nombre'] = $this->nombre;
+        $this->parametros['color'] = $this->color;
+        $this->parametros['habilidad'] = $this->habilidad;
+        $this->parametros['sociabilidad'] = $this->sociabilidad;
+        $this->parametros['propietario_id'] = $this->propietario_id;
+        $this->get_results_from_query();
+        if ($this->rows > 0) {
+            $this->mensaje = 'Mascota actualizada';
+            return true;
+        } else {
+            $this->mensaje = 'Error';
+            return false;
+        }
+    }
+    public function delete($id = ''){
+        $this->query = "DELETE FROM mascotas WHERE id = :id";
+        $this->parametros['id'] = $id;
+        $this->get_results_from_query();
+        if ($this->rows > 0) {
+            $this->mensaje = 'Mascota eliminada correctamente';
+            return true;
+        } else {
+            $this->mensaje = 'Error al eliminar la mascota';
+            return false;
+        }
+    }
 
     public function getMascotasWithPropietario() {
-        $this->query = "SELECT * FROM mascotas WHERE propietario_id IS NULL";
+        $this->query = "SELECT * FROM mascotas WHERE propietario_id IS NOT NULL";
         $this->get_results_from_query();
         return $this->rows;
     }
 
     public function getMascotasWithoutPropietario() {
-        $this->query = "SELECT * FROM mascotas WHERE propietario_id IS NOT NULL";
+        $this->query = "SELECT * FROM mascotas WHERE propietario_id IS NULL";
         $this->get_results_from_query();
         return $this->rows;
     }
+
 }
 ?>

@@ -43,6 +43,12 @@ class Usuario extends DBAbstractModel {
     public function getPassword() {
         return $this->password;
     }
+
+    public function getId() {
+        return $this->id;
+    }
+
+    
     
     public function set(){
         //Primero comprobamos que el email no exista ya dentro de la base de datos

@@ -73,10 +73,38 @@ $router->add([
 ]);
 
 $router->add([
+    'name'=>'mostrar_mascota',
+    'path'=>'/^\/mascotas\/mostrar\/[0-9]+$/',
+    'action'=>[MascotaController::class, 'mascotaAction'],
+    'perfil'=> ['user', 'admin', 'invitado']
+]);
+
+$router->add([
+    'name'=>'editar_mascota',
+    'path'=>'/^\/mascotas\/editar\/[0-9]+$/',
+    'action'=>[MascotaController::class, 'editarAction'],
+    'perfil'=> ['admin']
+]);
+
+$router->add([
+    'name'=>'borrar_mascota',
+    'path'=>'/^\/mascotas\/borrar\/[0-9]+$/',
+    'action'=>[MascotaController::class, 'borrarAction'],
+    'perfil'=> ['admin']
+]);
+
+$router->add([
     'name'=>'propietarios',
     'path'=>'/^\/propietarios$/',
     'action'=>[PropietarioController::class, 'indexAction'],
     'perfil'=> ['user', 'admin', 'invitado']
+]);
+
+$router->add([
+    'name'=>'convertir_propietario',
+    'path'=> '/^\/convertir_propietario$/',
+    'action'=>[PropietarioController::class, 'convertirPropietarioAction'],
+    'perfil' => ['user', 'admin']
 ]);
 
 $request = $_SERVER['REQUEST_URI'];

@@ -1,12 +1,12 @@
 <?php
-
+var_dump($data); // Debugging line to check the data being passed to the view
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Crear Mascota</title>
+    <title>Mascota</title>
     <link rel="stylesheet" href="/styles/index.css">
 </head>
 <body>
@@ -17,7 +17,7 @@
         }
     ?>
     <form method="post" class="login-form">
-        <h2>Registrar Mascota</h2><br>
+        <h2>Introduce los datos de la Mascota</h2><br>
         <p><?php echo $data['mensaje'] ?></p>
         <!-- NOMBRE -->
         <label for="nombre">Nombre:</label>
@@ -43,7 +43,7 @@
         <span style="color: red;"><?php echo isset($data) ? $data['eSociabilidad'] : ''; ?></span>
         <br>
 
-        <button type="submit">Crear Mascota</button>
+        <button type="submit">Guardar Mascota</button>
     </form>
 </body>
 </html>

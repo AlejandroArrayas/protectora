@@ -7,70 +7,78 @@ class Propietario extends DBAbstractModel {
     public $id;
     public $nombre;
     public $usuario_id;
+    public $mensaje = '';
 
-    public function get($id = "") {
-        if ($id != "") {
-            $this->query = "SELECT * FROM propietarios WHERE id = :id";
-            $this->parametros['id'] = $id;
-            $this->get_results_from_query();
-            if (count($this->rows) == 1) {
-                foreach ($this->rows[0] as $prop => $val) {
-                    $this->$prop = $val;
-                }
-                $this->mensaje = 'Propietario encontrado';
-            } else {
-                $this->mensaje = 'Propietario no encontrado';
-            }
-            return $this->rows;
-        } else {
-            $this->query = "SELECT * FROM propietarios";
-            $this->get_results_from_query();
-            return $this->rows;
+    //Modelo Singleton
+    private static $instancia;
+    public static function getInstancia(){
+        if (!isset(self::$instancia)) {
+            $miclase = __CLASS__;
+            self::$instancia = new $miclase;
         }
+        return self::$instancia;
+    }
+    public function __clone(){
+        trigger_error('La clonación no es permitida!.', E_USER_ERROR);
     }
 
-    public function set($data = array()) {
-        if (isset($data['nombre'])) {
-            $this->query = "INSERT INTO propietarios (nombre, usuario_id) VALUES (:nombre, :usuario_id)";
-            $this->parametros['nombre'] = $data['nombre'];
-            $this->parametros['usuario_id'] = isset($data['usuario_id']) ? $data['usuario_id'] : null;
-            $this->execute_single_query();
-            $this->mensaje = 'Propietario agregado';
-        } else {
-            $this->mensaje = 'Datos insuficientes para agregar propietario';
-        }
-    }
-
-    public function edit($data = array()) {
-        if (isset($data['id']) && isset($data['nombre'])) {
-            $this->query = "UPDATE propietarios SET nombre = :nombre, usuario_id = :usuario_id WHERE id = :id";
-            $this->parametros['id'] = $data['id'];
-            $this->parametros['nombre'] = $data['nombre'];
-            $this->parametros['usuario_id'] = isset($data['usuario_id']) ? $data['usuario_id'] : null;
-            $this->execute_single_query();
-            $this->mensaje = 'Propietario actualizado';
-        } else {
-            $this->mensaje = 'Datos insuficientes para actualizar propietario';
-        }
-    }
-
-    public function delete($id = "") {
-        if ($id != "") {
-            $this->query = "DELETE FROM propietarios WHERE id = :id";
-            $this->parametros['id'] = $id;
-            $this->execute_single_query();
-            $this->mensaje = 'Propietario eliminado';
-        } else {
-            $this->mensaje = 'ID no proporcionado para eliminar propietario';
-        }
-    }
 
     public function getNombre() {
         return $this->nombre;
     }
 
     public function getNombreById($id_propietario){
+        $this->query = "SELECT nombre FROM propietarios WHERE id = :id";
+        $this->parametros['id'] = $id_propietario;
+        $this->get_results_from_query();
+        $resultados = $this->rows;
+        if (isset($resultados[0]['nombre'])) {
+            return $resultados[0]['nombre'];
+        }
+        return null;
+    }
+
+    public function get($id = ""){
+
+    }
+    protected function set() {
         
+    }
+
+    // Nuevo método específico para crear propietario
+    public function crearPropietario($usuario_id, $nombre = null){
+        // Comprobar si ya existe un propietario para este usuario
+        $this->query = "SELECT * FROM propietarios WHERE usuario_id = :usuario_id";
+        $this->parametros['usuario_id'] = $usuario_id;
+        $this->get_results_from_query();
+        if (count($this->rows) > 0) {
+            $this->mensaje = 'Ya eres propietario.';
+            return false;
+        }
+        // Insertar nuevo propietario
+        $this->query = "INSERT INTO propietarios (nombre, usuario_id) VALUES (:nombre, :usuario_id)";
+        $this->parametros['nombre'] = $nombre ?? '';
+        $this->parametros['usuario_id'] = $usuario_id;
+        $this->get_results_from_query();
+        $this->mensaje = '¡Ahora eres propietario!';
+        return true;
+    }
+    public function delete(){
+
+    }
+    public function edit(){
+        
+    }
+
+    public function isPropietario($usuario_id) {
+        $this->query = "SELECT * FROM propietarios WHERE usuario_id = :usuario_id";
+        $this->parametros['usuario_id'] = $usuario_id;
+        $this->get_results_from_query();
+        if (count($this->rows) > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
 ?>

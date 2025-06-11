@@ -5,33 +5,27 @@ use App\Models\Mascota;
 
 class PropietarioController extends BaseController {
     public function indexAction($request) {
-        $propietario = new Propietario();
-        $data['propietario'] = $propietario->get();
+        $data['ubicacion'] = 'propietarios';
         $data['mensaje'] = 'Listado de propietarios';
-        $this->renderHTML('../app/views/propietario_view.php', $data);
+        $this->renderHTML('../app/views/propietarios_view.php', $data);
     }
 
-    public function showMascotasAction($request) {
-        // Extraer el id del propietario de la URL
-        $partes = explode('/', trim($request, '/'));
-        if (isset($partes[2])) {
-            $id = $partes[2];
-        } else {
-            $id = null;
+
+    public function convertirPropietarioAction($request) {
+        if (!isset($_SESSION['id_usuario'])) {
+            header('Location: /login');
+            exit();
         }
-        $propietarioModel = new Propietario();
-        $propietario = $propietarioModel->get($id);
-        if ($propietario && count($propietario) > 0) {
-            $propietarioData = $propietario[0]; // get() devuelve un array de resultados
-            $data['nombre'] = $propietarioData['nombre'];
-            $mascotaModel = new Mascota();
-            $data['mascotas'] = $mascotaModel->getMascotasByPropietario($id);
-            $data['mensaje'] = 'Mascotas de ' . $propietarioData['nombre'];
+        $usuario_id = $_SESSION['id_usuario'];
+        $nombre = $_SESSION['usuario'] ?? '';
+        $propietario = new \App\Models\Propietario();
+        if ($propietario->crearPropietario($usuario_id, $nombre)) {
+            $mensaje = '¡Ahora eres propietario!';
         } else {
-            $data['mensaje'] = 'Propietario no encontrado';
-            $data['mascotas'] = [];
+            $mensaje = $propietario->mensaje;
         }
-        $this->renderHTML('../app/views/mascotas_propietario_view.php', $data);
+        header('Location: /propietarios');
+        exit();
     }
 
 }

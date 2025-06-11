@@ -9,11 +9,10 @@
 
 <body>
     <?php include_once 'header_view.php'; ?>
-    <?php var_dump($data); ?>
 
     <h1 style="text-align: center;">Mascotas aun por Adoptar</h1>
     <div class="mascotasContainer">
-        <?php foreach ($data['mascotasConPropietario'] as $mascota): ?>
+        <?php foreach ($data['mascotasSinPropietario'] as $mascota): ?>
             <a href="/mascotas/mostrar/<?php echo $mascota['id']; ?>" class="mascotaLink">
                 <div class="mascotaCard">
                     <h2>
@@ -55,7 +54,7 @@
 
     <h1 style="text-align: center;">Mascotas ya Adoptadas</h1>
     <div class="mascotasContainer">
-        <?php foreach ($data['mascotasSinPropietario'] as $mascota): ?>
+        <?php foreach ($data['mascotasConPropietario'] as $mascota): ?>
             <a href="/mascotas/mostrar/<?php echo $mascota['id']; ?>" class="mascotaLink">
                 <div class="mascotaCard">
                     <h2>
@@ -91,8 +90,10 @@
                     <p>
                         Propietario:
                         <?php
-                            if (isset($mascota['propietario_id'])) {
-                                echo $mascota['propietario_id'];
+                            if (isset($mascota['nombre_propietario'])) {
+                                echo $mascota['nombre_propietario'];
+                            } else {
+                                echo 'Sin propietario';
                             }
                         ?>
                     </p>
