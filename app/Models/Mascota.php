@@ -136,5 +136,25 @@ class Mascota extends DBAbstractModel {
         return $this->rows;
     }
 
+    public function getMascotasByPropietarioId($propietario_id) {
+        $this->query = "SELECT * FROM mascotas WHERE propietario_id = :propietario_id";
+        $this->parametros['propietario_id'] = $propietario_id;
+        $this->get_results_from_query();
+        return $this->rows;
+    }
+
+    public function adoptar($id, $propietario_id){
+        $this->query = "UPDATE mascotas SET propietario_id = :propietario_id WHERE id = :id";
+        $this->parametros['id'] = $id;
+        $this->parametros['propietario_id'] = $propietario_id;
+        $this->get_results_from_query();
+        if ($this->rows > 0) {
+            $this->mensaje = 'Mascota adoptada correctamente';
+            return true;
+        } else {
+            $this->mensaje = 'Error al adoptar la mascota';
+            return false;
+        }
+    }
 }
 ?>

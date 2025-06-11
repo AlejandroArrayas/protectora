@@ -86,7 +86,6 @@ class BasicController extends BaseController {
         // Si el usuario ya está logueado, redirigir al índice
         if (isset($_SESSION['usuario'])) {
             header('Location: /');
-            exit();
         }
         
 
@@ -134,8 +133,8 @@ class BasicController extends BaseController {
                     $_SESSION['perfil_usuario'] = $oUsuario->perfilUsuario();
                     $_SESSION['id_usuario'] = $oUsuario->getId();
                     $_SESSION['boolean_propietario'] = $oPropietario->isPropietario($oUsuario->getId());
+                    $_SESSION['id_propietario'] = $oPropietario->getIdByUsuarioId($oUsuario->getId());
                     header('Location: /');
-                    exit();
                 } else {
                     $data['error'] = 'Email o contraseña incorrectos';
                 }
@@ -146,10 +145,10 @@ class BasicController extends BaseController {
         }
         $this->renderHTML('../app/views/login_view.php', $data);
     }
+
     public function logoutAction($request) {
         session_destroy();
         header('Location: /');
-        exit();
     }
 
 }

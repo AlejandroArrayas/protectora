@@ -54,8 +54,8 @@ $router->add([
 $router->add([
     'name'=>'logout',
     'path'=> '/^\/logout$/',
-    'action'=>[BasicController::class, 'logoutAction',
-    'perfil' => ['user', 'admin']]
+    'action'=>[BasicController::class, 'logoutAction'],
+    'perfil' => ['user', 'admin']
 ]);
 
 $router->add([
@@ -105,6 +105,20 @@ $router->add([
     'path'=> '/^\/convertir_propietario$/',
     'action'=>[PropietarioController::class, 'convertirPropietarioAction'],
     'perfil' => ['user', 'admin']
+]);
+
+$router->add([
+    'name'=>'propietario',
+    'path'=>'/^\/propietario$/',
+    'action'=>[PropietarioController::class, 'showAction'],
+    'perfil'=> ['user', 'admin']
+]);
+
+$router->add([
+    'name'=>'adoptar_mascota',
+    'path'=>'/^\/mascotas\/adoptar\/[0-9]+$/',
+    'action'=>[MascotaController::class, 'adoptarAction'],
+    'perfil'=> ['user', 'admin']
 ]);
 
 $request = $_SERVER['REQUEST_URI'];

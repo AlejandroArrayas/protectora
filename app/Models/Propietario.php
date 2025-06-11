@@ -38,6 +38,28 @@ class Propietario extends DBAbstractModel {
         return null;
     }
 
+    public function getNombreByIdUsuario($usuario_id){
+        $this->query = "SELECT nombre FROM propietarios WHERE usuario_id = :usuario_id";
+        $this->parametros['usuario_id'] = $usuario_id;
+        $this->get_results_from_query();
+        $resultados = $this->rows;
+        if (isset($resultados[0]['nombre'])) {
+            return $resultados[0]['nombre'];
+        }
+        return null;
+    }
+
+    public function getIdByUsuarioId($usuario_id){
+        $this->query = "SELECT id FROM propietarios WHERE usuario_id = :usuario_id";
+        $this->parametros['usuario_id'] = $usuario_id;
+        $this->get_results_from_query();
+        $resultados = $this->rows;
+        if (isset($resultados[0]['id'])) {
+            return $resultados[0]['id'];
+        }
+        return null;
+    }
+
     public function get($id = ""){
 
     }
@@ -46,18 +68,10 @@ class Propietario extends DBAbstractModel {
     }
 
     // Nuevo método específico para crear propietario
-    public function crearPropietario($usuario_id, $nombre = null){
-        // Comprobar si ya existe un propietario para este usuario
-        $this->query = "SELECT * FROM propietarios WHERE usuario_id = :usuario_id";
-        $this->parametros['usuario_id'] = $usuario_id;
-        $this->get_results_from_query();
-        if (count($this->rows) > 0) {
-            $this->mensaje = 'Ya eres propietario.';
-            return false;
-        }
+    public function crearPropietario($usuario_id, $nombre){
         // Insertar nuevo propietario
         $this->query = "INSERT INTO propietarios (nombre, usuario_id) VALUES (:nombre, :usuario_id)";
-        $this->parametros['nombre'] = $nombre ?? '';
+        $this->parametros['nombre'] = $nombre;
         $this->parametros['usuario_id'] = $usuario_id;
         $this->get_results_from_query();
         $this->mensaje = '¡Ahora eres propietario!';

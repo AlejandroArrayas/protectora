@@ -13,6 +13,10 @@
 <nav>
     <ul>
     <?php
+        if(isset($_SESSION['id_usuario']) && $_SESSION['boolean_propietario'] == true && !isset($data['ubicacion']) || $data['ubicacion'] !== 'propietario') {
+            echo '<li class="perfilPropietario"><a href="/propietario">Perfil de propietario</a></li>';
+        }
+
         if (!isset($data['ubicacion']) || $data['ubicacion'] !== 'mascotas') {
             echo '<li><a href="/mascotas">Mascotas</a></li>';
         }
@@ -38,9 +42,10 @@
 
         if (!isset($data['ubicacion']) || $data['ubicacion'] !== 'crear_mascota') {
             if (isset($_SESSION['perfil_usuario']) && $_SESSION['perfil_usuario'] === 'admin') {
-                echo '<li class="crearMascota"><a href="/crear_mascota">Crear mascota</a></li>';
+                echo '<li class="crearMascota"><a style="background-color: grey;" href="/crear_mascota">Crear mascota</a></li>';
             }
         }
+ 
 
         
     ?>

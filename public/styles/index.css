@@ -263,3 +263,18 @@ a{
     margin: 0;
     line-height: 1.6;
 }
+
+.mascotaAdoptarWrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    justify-content: center;
+}
+.adoptarBtn {
+    color: #000000;
+    border: none;
+    border-radius: 8px;
+    padding: 0.7rem 2rem;
+    box-shadow: 0 2px 8px rgba(76,163,175,0.13);
+}

@@ -208,5 +208,30 @@ class MascotaController extends BaseController {
             echo 'Error al borrar la mascota: ' . $oMascota->mensaje;
         }
     }
+
+    public function adoptarAction(){
+        if (!isset($_SESSION['id_usuario']) || !$_SESSION['boolean_propietario']) {
+            header('Location: /login');
+        }
+
+        // Obtener el id desde la URL
+        $uri = $_SERVER['REQUEST_URI'];
+        $segmentos = explode('/', trim($uri, '/'));
+        $id = end($segmentos);
+
+        $oMascota = Mascota::getInstancia();
+        $oPropietario = Propietario::getInstancia();
+
+        // Obtener el ID del propietario
+        $propietario_id = $oPropietario->getIdByUsuarioId($_SESSION['id_usuario']);
+
+        // Actualizar la mascota con el ID del propietario
+        if ($oMascota->adoptar($id, $propietario_id)) {
+            $_SESSION['mensaje'] = 'Mascota adoptada correctamente';
+            header('Location: /propietario');
+        } else {
+            $_SESSION['error'] = 'Error al adoptar la mascota: ' . $oMascota->mensaje;
+        }
+    }
 }
 ?>
